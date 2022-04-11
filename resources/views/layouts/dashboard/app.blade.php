@@ -322,6 +322,8 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+    {{--ckeditor standard--}}
+    <script src="{{ asset('dashboardFiles/plugins/ckeditor/ckeditor.js') }}"></script>
     <!-- Bootstrap 4 rtl -->
     <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
     <!-- Bootstrap 4 -->
@@ -361,6 +363,8 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+    {{--ckeditor standard--}}
+    <script src="{{ asset('dashboardFiles/pluginsLTR/ckeditor/ckeditor.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{url('/')}}/dashboardFiles/pluginsLTR/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- ChartJS -->
@@ -445,7 +449,7 @@
 
             });
 
-            // CKEDITOR.config.language =  "{{ app()->getLocale() }}";
+            CKEDITOR.config.language =  "{{ app()->getLocale() }}";
 
         });//end of ready
 

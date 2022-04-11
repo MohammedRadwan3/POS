@@ -32,22 +32,32 @@
               </p>
             </a>
           </li>
-          @if (auth()->user()->hasPermission('users_read'))
-          <li class="nav-item has-treeview menu-open">
-            <a href="{{ route('dashboard.users.index') }}" class="nav-link {{ (request()->segment(3) == 'users') ? 'active' : '' }}">
-                <i class="fas fa-user"></i>
-              <p>
-                @lang('site.users')
-              </p>
-            </a>
-          </li>
-          @endif
           @if (auth()->user()->hasPermission('categories_read'))
           <li class="nav-item has-treeview menu-open">
             <a href="{{ route('dashboard.categories.index') }}" class="nav-link {{ (request()->segment(3) == 'categories') ? 'active' : '' }}">
                 <i class="fas fa-align-right"></i>
                 <p>
                 @lang('site.categories')
+              </p>
+            </a>
+          </li>
+          @endif
+          @if (auth()->user()->hasPermission('products_read'))
+          <li class="nav-item has-treeview menu-open">
+            <a href="{{ route('dashboard.products.index') }}" class="nav-link {{ (request()->segment(3) == 'products') ? 'active' : '' }}">
+                <i class="fab fa-product-hunt"></i>
+              <p>
+                @lang('site.products')
+              </p>
+            </a>
+          </li>
+          @endif
+          @if (auth()->user()->hasPermission('users_read'))
+          <li class="nav-item has-treeview menu-open">
+            <a href="{{ route('dashboard.users.index') }}" class="nav-link {{ (request()->segment(3) == 'users') ? 'active' : '' }}">
+                <i class="fas fa-user"></i>
+              <p>
+                @lang('site.users')
               </p>
             </a>
           </li>

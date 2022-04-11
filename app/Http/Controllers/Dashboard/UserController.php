@@ -32,7 +32,7 @@ class UserController extends Controller
                     ->orWhere('last_name', 'like', '%' . $request->search . '%');
 
             });
-        })->latest()->paginate(10);
+        })->latest()->paginate(6);
         return view('dashboard.users.index', compact('users'));
     }
 
