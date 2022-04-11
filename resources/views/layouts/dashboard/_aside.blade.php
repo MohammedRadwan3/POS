@@ -11,10 +11,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{url('/')}}/dashboardFiles/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('uploads/user_images/' . Auth::user()->image) }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</a>
         </div>
       </div>
 
@@ -32,7 +32,7 @@
               </p>
             </a>
           </li>
-          @if (auth()->user()->hasPermission('read_users'))
+          @if (auth()->user()->hasPermission('users_read'))
           <li class="nav-item has-treeview menu-open">
             <a href="{{ route('dashboard.users.index') }}" class="nav-link {{ (request()->segment(3) == 'users') ? 'active' : '' }}">
                 <i class="fas fa-user"></i>

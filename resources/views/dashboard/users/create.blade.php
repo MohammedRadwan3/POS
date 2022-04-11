@@ -47,15 +47,15 @@
                         <input type="email" name="email" class="form-control" value="{{ old('email') }}">
                     </div>
 
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label>@lang('site.image')</label>
                         <input type="file" name="image" class="form-control image">
-                    </div> --}}
+                    </div>
 
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <img src="{{ asset('uploads/user_images/default.png') }}" style="width: 100px"
                             class="img-thumbnail image-preview" alt="">
-                    </div> --}}
+                    </div>
 
                     <div class="form-group">
                         <label>@lang('site.password')</label>

@@ -138,6 +138,37 @@
                         </li>
                     </ul>
                 </li>
+                @guest
+                    @if (Route::has('login'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                    @endif
+
+                    @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                    @endif
+                @else
+                    <li class="nav-item">
+                        {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
+                            <a class="nav-link" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        {{-- </div> --}}
+                    </li>
+                @endguest
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="{{ route('dashboard.home') }}" class="nav-link">@lang('site.dashboard')</a>
                 </li>
@@ -362,6 +393,63 @@
     @jquery
     @toastr_js
     @toastr_render
+    <script>
+        $(document).ready(function () {
+
+            // $('.sidebar-menu').tree();
+
+            //icheck
+            // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            //     checkboxClass: 'icheckbox_minimal-blue',
+            //     radioClass: 'iradio_minimal-blue'
+            // });
+
+            //delete
+            // $('.delete').click(function (e) {
+
+            //     var that = $(this)
+
+            //     e.preventDefault();
+
+            //     var n = new Toast({
+            //         text: "@lang('site.confirm_delete')",
+            //         type: "warning",
+            //         killer: true,
+            //         buttons: [
+            //             toastr.button("@lang('site.yes')", 'btn btn-success mr-2', function () {
+            //                 that.closest('form').submit();
+            //             }),
+
+            //             toastr.button("@lang('site.no')", 'btn btn-primary mr-2', function () {
+            //                 n.close();
+            //             })
+            //         ]
+            //     });
+
+            //     n.show();
+
+            // });//end of delete
+
+            // // image preview
+            $(".image").change(function () {
+
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.image-preview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                }
+
+            });
+
+            // CKEDITOR.config.language =  "{{ app()->getLocale() }}";
+
+        });//end of ready
+
+    </script>
 </body>
 
 </html>
