@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use toastr;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -30,10 +31,10 @@ class UserController extends Controller
             'email' => 'required|unique:users',
             // 'image' => 'image',
             'password' => 'required|confirmed',
-            // 'permissions' => 'required|min:1'
+            'permissions' => 'required|min:1'
         ]);
 
-        $request_data = $request->except(['password', 'password_confirmation'/* , 'permissions' */]);
+        $request_data = $request->except(['password', 'password_confirmation', 'permissions']);
         $request_data['password'] = bcrypt($request->password);
 
         $user = User::create($request_data);
@@ -60,6 +61,9 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        toastr()->success(__('site.deleted_successfully'));
+        // session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->route('dashboard.users.index');
     }
 }
