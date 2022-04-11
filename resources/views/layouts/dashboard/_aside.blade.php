@@ -52,6 +52,16 @@
             </a>
           </li>
           @endif
+          @if (auth()->user()->hasPermission('clients_read'))
+          <li class="nav-item has-treeview menu-open">
+            <a href="{{ route('dashboard.clients.index') }}" class="nav-link {{ (request()->segment(3) == 'clients') ? 'active' : '' }}">
+                <i class="fas fa-users"></i>
+              <p>
+                @lang('site.clients')
+              </p>
+            </a>
+          </li>
+          @endif
           @if (auth()->user()->hasPermission('users_read'))
           <li class="nav-item has-treeview menu-open">
             <a href="{{ route('dashboard.users.index') }}" class="nav-link {{ (request()->segment(3) == 'users') ? 'active' : '' }}">
