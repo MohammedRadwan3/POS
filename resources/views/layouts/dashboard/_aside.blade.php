@@ -42,6 +42,16 @@
             </a>
           </li>
           @endif
+          @if (auth()->user()->hasPermission('categories_read'))
+          <li class="nav-item has-treeview menu-open">
+            <a href="{{ route('dashboard.categories.index') }}" class="nav-link {{ (request()->segment(3) == 'categories') ? 'active' : '' }}">
+                <i class="fas fa-align-right"></i>
+                <p>
+                @lang('site.categories')
+              </p>
+            </a>
+          </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
