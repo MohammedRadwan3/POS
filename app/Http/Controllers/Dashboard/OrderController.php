@@ -15,7 +15,7 @@ class OrderController extends Controller
 
             return $q->where('name', 'like', '%' . $request->search . '%');
 
-        })->paginate(5);
+        })->latest()->paginate(5);
 
         return view('dashboard.orders.index', compact('orders'));
     }
@@ -26,34 +26,20 @@ class OrderController extends Controller
         return view('dashboard.orders._products', compact('order', 'products'));
 
     }//end of products
-    
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(Order $order)
-    {
-        //
-    }
-
-    public function edit(Order $order)
-    {
-        //
-    }
-
-    public function update(Request $request, Order $order)
-    {
-        //
-    }
 
     public function destroy(Order $order)
     {
-        //
-    }
+        foreach ($order->products as $product) {
+
+            $product->update([
+                'stock' => $product->stock + $product->pivot->quantity
+            ]);
+
+        }//end of for each
+
+        $order->delete();
+        toastr()->success(__('site.deleted_successfully'));
+        return redirect()->route('dashboard.orders.index');
+
+    }//end of orde
 }

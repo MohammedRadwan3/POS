@@ -22,5 +22,5 @@
     <h3>@lang('site.total') <span>{{ number_format($order->total_price, 2) }}</span></h3>
 
 </div>
-
+{{-- <a href="{{ route('dashboard.orders.products', $order->id) }}" rel="noopener" target="_blank" class="btn btn-block btn-primary print-btn"><i class="fas fa-print"></i> @lang('site.print')</a> --}}
 <button class="btn btn-block btn-primary print-btn"><i class="fa fa-print"></i> @lang('site.print')</button>

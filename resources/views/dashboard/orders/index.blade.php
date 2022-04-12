@@ -44,7 +44,7 @@
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>
                                         @lang('site.search')</button>
                                     @if (auth()->user()->hasPermission('orders_create'))
-                                    <a href="{{ route('dashboard.orders.create') }}" class="btn btn-primary"><i
+                                    <a href="{{ route('dashboard.clients.create') }}" class="btn btn-primary"><i
                                             class="fa fa-plus"></i> @lang('site.add')</a>
                                     @else
                                     <a href="#" class="btn btn-primary disabled"><i class="fa fa-plus"></i>
@@ -85,7 +85,7 @@
                                             @lang('site.show')
                                         </button>
                                         @if (auth()->user()->hasPermission('orders_update'))
-                                        <a href="{{ route('dashboard.orders.edit', $order->id) }}"
+                                        <a href="{{ route('dashboard.clients.orders.edit', ['client' => $order->client->id, 'order' => $order->id]) }}"
                                             class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
                                             @lang('site.edit')</a>
                                         @else

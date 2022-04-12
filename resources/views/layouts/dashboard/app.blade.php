@@ -402,6 +402,8 @@
     <script src="{{url('/')}}/dashboardFiles/js/custom/order.js"></script>
     {{-- jquery number --}}
     <script src="{{url('/')}}/dashboardFiles/js/custom/jquery.number.min.js"></script>
+    {{--print this--}}
+    <script src="{{ asset('dashboardFiles/js/custom/printThis.js') }}"></script>
     <script>
         $(document).ready(function () {
 

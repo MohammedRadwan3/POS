@@ -25,7 +25,7 @@
                with font-awesome or any other icon font library -->
 
           <li class="nav-item has-treeview menu-open">
-            <a href="{{ route('dashboard.home') }}" class="nav-link {{ (request()->segment(3) == 'index') ? 'active' : '' }}">
+            <a href="{{ route('dashboard.home') }}" class="nav-link {{ (request()->segment(2) == 'dashboard') ? 'active' : '' }}">
                 <i class="fa fa-th"></i>
               <p>
                 @lang('site.dashboard')

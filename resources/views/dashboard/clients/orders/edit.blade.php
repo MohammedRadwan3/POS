@@ -10,7 +10,8 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard.home') }}">@lang('site.dashboard')</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard.clients.index') }}">@lang('site.clients')</a>
+                    <li class="breadcrumb-item"><a
+                            href="{{ route('dashboard.clients.index') }}">@lang('site.clients')</a>
                     </li>
                     <li class="breadcrumb-item active">@lang('site.edit')</li>
                 </ol>
@@ -20,43 +21,183 @@
 </div>
 <!-- /.content-header -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="card card-info card-outline">
-            <div class="card-header">
-                <h3 class="card-title text-end">@lang('site.edit') @lang('site.clients')</h3>
-            </div>
-            <!-- /.card-header -->
-            <!-- form start -->
-            @include('partials._errors')
-            <form action="{{ route('dashboard.clients.update', $client->id) }}" method="post" enctype="multipart/form-data">
-                @csrf
-                {{ method_field('put') }}
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>@lang('site.name')</label>
-                        <input type="text" name="name" class="form-control" value="{{ $client->name }}">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="container-fluid">
+                <div class="card card-info card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title text-end">@lang('site.categories')</h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                    <div class="card-body">
+
+                        @foreach ($categories as $category)
+
+                        <div id="accordion">
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100" style="text-decoration: none;" data-toggle="collapse"
+                                            href="#{{ str_replace(' ', '-', $category->name) }}">{{ $category->name
+                                            }}</a>
+                                    </h4>
+                                </div>
+                                <div id="{{ str_replace(' ', '-', $category->name) }}" class="collapse"
+                                    data-parent="#accordion">
+                                    <div class="card-body">
+                                        @if ($category->products->count() > 0)
+
+                                        <table class="table table-hover">
+                                            <tr>
+                                                <th>@lang('site.name')</th>
+                                                <th>@lang('site.stock')</th>
+                                                <th>@lang('site.price')</th>
+                                                <th>@lang('site.add')</th>
+                                            </tr>
+
+                                            @foreach ($category->products as $product)
+                                            <tr>
+                                                <td>{{ $product->name }}</td>
+                                                <td>{{ $product->stock }}</td>
+                                                <td>{{ $product->sale_price }}</td>
+                                                <td>
+                                                    <a href="" id="product-{{ $product->id }}"
+                                                        data-name="{{ $product->name }}" data-id="{{ $product->id }}"
+                                                        data-price="{{ $product->sale_price }}"
+                                                        class="btn {{ in_array($product->id, $order->products->pluck('id')->toArray()) ? 'btn-default disabled' : 'btn-success add-product-btn' }} btn-sm">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+
+                                        </table><!-- end of table -->
+
+                                        @else
+                                        <h5>@lang('site.no_records')</h5>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @endforeach
                     </div>
 
-                    @for ($i = 0; $i < 2; $i++)
-                        <div class="form-group">
-                            <label>@lang('site.phone')</label>
-                            <input type="text" name="phone[]" class="form-control" value="{{ $client->phone[$i] ?? '' }}">
-                        </div>
-                    @endfor
-
-                    <div class="form-group">
-                        <label>@lang('site.address')</label>
-                        <textarea name="address" class="form-control">{{ $client->address }}</textarea>
-                    </div
-
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> @lang('site.edit')</button>
-                </div>
-            </form>
+                <!-- /.card -->
+            </div><!-- /.container-fluid -->
         </div>
-        <!-- /.card -->
-    </div><!-- /.container-fluid -->
+        <div class="col-lg-6">
+            <div class="container-fluid">
+                <div class="card card-info card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title text-end">@lang('site.create') @lang('site.clients')</h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                    <div class="card-body">
+                        @include('partials._errors')
+
+                        <form
+                            action="{{ route('dashboard.clients.orders.update', ['order' => $order->id, 'client' => $client->id]) }}"
+                            method="post">
+
+                            {{ csrf_field() }}
+                            {{ method_field('put') }}
+
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@lang('site.product')</th>
+                                        <th>@lang('site.quantity')</th>
+                                        <th>@lang('site.price')</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="order-list">
+
+                                    @foreach ($order->products as $product)
+                                    <tr>
+                                        <td>{{ $product->name }}</td>
+                                        <td><input type="number" name="products[{{ $product->id }}][quantity]"
+                                                data-price="{{ number_format($product->sale_price, 2) }}"
+                                                class="form-control input-sm product-quantity" min="1"
+                                                value="{{ $product->pivot->quantity }}"></td>
+                                        <td class="product-price">{{ number_format($product->sale_price *
+                                            $product->pivot->quantity, 2) }}</td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm remove-product-btn"
+                                                data-id="{{ $product->id }}"><span class="fa fa-trash"></span></button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+
+                                </tbody>
+
+                            </table><!-- end of table -->
+
+                            <h4>@lang('site.total') : <span class="total-price">{{ number_format($order->total_price, 2)
+                                    }}</span></h4>
+
+                            <button class="btn btn-primary btn-block" id="form-btn"><i class="fa fa-edit"></i>
+                                @lang('site.edit_order')</button>
+
+                        </form><!-- end of form -->
+                    </div>
+                </div>
+                <!-- /.card -->
+                @if ($client->orders->count() > 0)
+
+                <div class="card card-info card-outline">
+
+                    <div class="card-header">
+
+                        <h3 class="card-title" style="margin-bottom: 10px">@lang('site.previous_orders')
+                            <small>{{ $orders->total() }}</small>
+                        </h3>
+
+                    </div><!-- end of box header -->
+
+                    <div class="card-body">
+
+                        @foreach ($orders as $order)
+
+                        <div id="accordion">
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        <a class="d-block w-100" style="text-decoration: none;" data-toggle="collapse"
+                                            href="#{{ $order->created_at->format('d-m-Y-s') }}">
+                                            {{ $order->created_at->toFormattedDateString() }}</a>
+                                    </h4>
+                                </div>
+                                <div id="{{ $order->created_at->format('d-m-Y-s') }}" class="collapse"
+                                    data-parent="#accordion">
+                                    <div class="card-body">
+                                        <ul class="list-group">
+                                            @foreach ($order->products as $product)
+                                            <li class="list-group-item">{{ $product->name }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @endforeach
+
+                        {{ $orders->links() }}
+
+                    </div><!-- end of box body -->
+
+                </div><!-- end of box -->
+
+                @endif
+            </div><!-- /.container-fluid -->
+        </div>
+    </div>
 </section>
 @endsection
