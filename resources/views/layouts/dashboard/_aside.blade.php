@@ -62,6 +62,16 @@
             </a>
           </li>
           @endif
+          @if (auth()->user()->hasPermission('orders_read'))
+          <li class="nav-item has-treeview menu-open">
+            <a href="{{ route('dashboard.orders.index') }}" class="nav-link {{ (request()->segment(3) == 'orders') ? 'active' : '' }}">
+                <i class="fab fa-first-order"></i>
+              <p>
+                @lang('site.orders')
+              </p>
+            </a>
+          </li>
+          @endif
           @if (auth()->user()->hasPermission('users_read'))
           <li class="nav-item has-treeview menu-open">
             <a href="{{ route('dashboard.users.index') }}" class="nav-link {{ (request()->segment(3) == 'users') ? 'active' : '' }}">

@@ -2,7 +2,13 @@
 
 namespace Database\Seeders;
 
+
 use Illuminate\Database\Seeder;
+use Database\Seeders\LaratrustSeeder;
+use Database\Seeders\UsersTableSeeder;
+use Database\Seeders\ClientsTableSeeder;
+use Database\Seeders\ProductsTableSeeder;
+use Database\Seeders\CategoriesTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +22,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(LaratrustSeeder::class);
         $this->call(UsersTableSeeder::class);
-
+        $this->call(CategoriesTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
+        $this->call(ClientsTableSeeder::class);
     }
 }

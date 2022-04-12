@@ -44,17 +44,42 @@ $(document).ready(function() {
     $('body').on('keyup change', '.product-quantity', function() {
 
         var quantity = Number($(this).val());
-        var unitPrice = $(this).data('price');
+        // var unitPrice = $(this).data('price');
+        var unitPrice = parseFloat($(this).data('price').replace(/,/g, ''));
         $(this).closest('tr').find('.product-price').html($.number(quantity * unitPrice, 2))
         calculateTotal();
 
-        // var quantity = Number($(this).val()); //2
-        // var unitPrice = parseFloat($(this).data('price').replace(/,/g, '')); //150
-        // console.log(unitPrice);
-        // $(this).closest('tr').find('.product-price').html($.number(quantity * unitPrice, 2));
-        // calculateTotal();
-
     });//end of product quantity change
+
+    //list all order products
+    $('.order-products').on('click', function(e) {
+
+        e.preventDefault();
+
+        $('#loading').css('display', 'flex');
+
+        var url = $(this).data('url');
+        var method = $(this).data('method');
+        $.ajax({
+            url: url,
+            method: method,
+            success: function(data) {
+
+                $('#loading').css('display', 'none');
+                $('#order-product-list').empty();
+                $('#order-product-list').append(data);
+
+            }
+        })
+
+    });//end of order products click
+
+    //print order
+    $(document).on('click', '.print-btn', function() {
+
+        $('#print-area').printThis();
+
+    });//end of click function
 });
 
 //calculate the total
