@@ -313,7 +313,7 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-    @if (app()->getLocale() == 'ar')
+    {{-- @if (app()->getLocale() == 'ar')
     <!-- jQuery -->
     <script src="{{url('/')}}/dashboardFiles/plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -322,7 +322,7 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
-    {{--ckeditor standard--}}
+    ckeditor standard
     <script src="{{ asset('dashboardFiles/plugins/ckeditor/ckeditor.js') }}"></script>
     <!-- Bootstrap 4 rtl -->
     <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
@@ -354,7 +354,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{url('/')}}/dashboardFiles/dist/js/demo.js"></script>
     <script src="jquery.min.js"></script>
-    @else
+    @else --}}
     <!-- jQuery -->
     <script src="{{url('/')}}/dashboardFiles/pluginsLTR/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -393,10 +393,15 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{url('/')}}/dashboardFiles/distLTR/js/pages/dashboard.js"></script>
     <script src="jquery.min.js"></script>
-    @endif
+    {{-- @endif --}}
     @jquery
     @toastr_js
     @toastr_render
+    {{--custom js--}}
+    <script src="{{url('/')}}/dashboardFiles/js/custom/image_preview.js"></script>
+    <script src="{{url('/')}}/dashboardFiles/js/custom/order.js"></script>
+    {{-- jquery number --}}
+    <script src="{{url('/')}}/dashboardFiles/js/custom/jquery.number.min.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -435,19 +440,19 @@
             // });//end of delete
 
             // // image preview
-            $(".image").change(function () {
+            // $(".image").change(function () {
 
-                if (this.files && this.files[0]) {
-                    var reader = new FileReader();
+            //     if (this.files && this.files[0]) {
+            //         var reader = new FileReader();
 
-                    reader.onload = function (e) {
-                        $('.image-preview').attr('src', e.target.result);
-                    }
+            //         reader.onload = function (e) {
+            //             $('.image-preview').attr('src', e.target.result);
+            //         }
 
-                    reader.readAsDataURL(this.files[0]);
-                }
+            //         reader.readAsDataURL(this.files[0]);
+            //     }
 
-            });
+            // });
 
             CKEDITOR.config.language =  "{{ app()->getLocale() }}";
 
